@@ -102,3 +102,34 @@ Subqueries work well for simple comparisons and single-value returns. CTEs great
 ### Tools Used
 
 PostgreSQL, pgAdmin 4 / VS Code with PostgreSQL extension, Superstore dataset (9,994 records).
+
+## Week 4: Azure Cloud Fundamentals & Data Pipeline Implementation using ADF
+
+### Task 1: Azure Portal & Resource Group
+
+This task focused on exploring the Azure Portal and understanding fundamental cloud concepts. A Resource Group was created to serve as a logical container for organizing and managing all related Azure resources. Resource Groups enable simplified management, access control, and cleanup of multiple services as a single unit, similar to a project folder that groups all related files together.
+
+### Task 2: Storage Setup
+
+A Storage Account was created to provide scalable cloud storage for the data pipeline, configured with Standard performance and Locally Redundant Storage (LRS). A Blob Container was created within the Storage Account to organize the CSV files, and a sample CSV file containing employee data (EmployeeID, FirstName, LastName, Department, Salary) was uploaded. Access keys and connection strings were retrieved to enable secure connections from other Azure services.
+
+### Task 3: ADF Basics
+
+Azure Data Factory was created as a fully managed ETL and data integration service. The ADF interface was explored through three main tabs: Author (for designing pipelines), Monitor (for tracking execution), and Manage (for configuring connections). A Linked Service was established to securely connect ADF to the Storage Account using the connection string, making the connection reusable across multiple pipelines. Two datasets were created – a source dataset pointing to the uploaded CSV file and a destination dataset for the processed output. A Get Metadata activity was added to validate file existence and capture file properties such as name, size, and last modified date.
+
+### Task 4: Pipeline Development
+
+A pipeline was built to orchestrate the data movement process. The Copy Data activity was added as the primary workhorse for transferring data from source to destination. The source dataset was configured to read from the uploaded CSV file, and the destination dataset was configured to write to a new output file. Column mapping was imported to ensure proper data structure preservation. The Get Metadata and Copy Data activities were connected with a dependency, ensuring that the copy operation runs only after successful validation.
+
+### Task 5: Pipeline Execution
+
+The pipeline was tested using Debug mode for development validation. After successful debugging, the pipeline was triggered for production execution using the "Trigger now" option. The Monitor tab was used to track the execution status, confirming both activities (Get Metadata and Copy Data) with "Succeeded" status, verifying that the pipeline successfully read the CSV file from the source and wrote it to the destination location.
+
+### Task 6: IAM Roles
+
+Identity and Access Management roles were assigned to enable secure communication between Azure Data Factory and the Storage Account. The Reader role was assigned to allow ADF to view and read data from the Storage Account, while the Contributor role was assigned to enable writing data to the destination. The roles were assigned using Managed Identity, where Azure creates a service account identity for ADF, eliminating the need to store credentials in the pipeline code and following the principle of least privilege.
+
+### Mini Project (Final Task)
+
+A complete pipeline was built that reads a CSV file from Blob Storage and processes it using Azure Data Factory. The pipeline successfully copied data from the source to a new destination location with metadata validation. The Copy Data activity transferred the CSV content while the Get Metadata activity validated file properties. The pipeline executed successfully with data copied to the destination and metadata validated, demonstrating the complete end-to-end data flow from source to destination.
+
